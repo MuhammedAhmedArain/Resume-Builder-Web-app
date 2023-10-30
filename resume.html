@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Professional Resume Builder</title>
+    <style>
+        /* Add your CSS styles here */
+        /* Styling for the form and other elements */
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .field-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-group {
+            text-align: center;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #258cd1;
+        }
+
+        #resume {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Professional Resume Builder</h1>
+        <div class="form">
+            <div class="field-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Your Name">
+            </div>
+            <div class="field-group">
+                <label for="fatherName">Father's Name:</label>
+                <input type="text" id="fatherName" placeholder="Father's Name">
+            </div>
+            <div class="field-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Your Email">
+            </div>
+            <div class="field-group">
+                <label for="contactNumber">Contact Number:</label>
+                <input type="text" id="contactNumber" placeholder="Contact Number">
+            </div>
+            <div class="field-group">
+                <label for="address">Address:</label>
+                <textarea id="address" rows="4" placeholder="Your Address"></textarea>
+            </div>
+            <div class="field-group">
+                <label for="languages">Languages:</label>
+                <input type="text" id="languages" placeholder="Languages Known">
+            </div>
+            <div class="field-group">
+                <label for="skills">Skills:</label>
+                <input type="text" id="skills" placeholder="Skills">
+            </div>
+            <div class="field-group">
+                <label for="aboutMe">About Me:</label>
+                <textarea id="aboutMe" rows="4" placeholder="About Me"></textarea>
+            </div>
+            <div class="field-group">
+                <label for="profilePhoto">Profile Photo:</label>
+                <input type="file" id="profilePhoto">
+            </div>
+
+            <div class="btn-group">
+                <button onclick="generateResume()">Generate Resume</button>
+                <button onclick="downloadResume()">Download Resume</button>
+            </div>
+        </div>
+
+        <div id="resume">
+            <!-- Resume content will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // JavaScript functions will go here
+        function generateResume() {
+            // Retrieve data from form fields
+            const name = document.getElementById('name').value;
+            const fatherName = document.getElementById('fatherName').value;
+            const email = document.getElementById('email').value;
+            const contactNumber = document.getElementById('contactNumber').value;
+            const address = document.getElementById('address').value;
+            const languages = document.getElementById('languages').value;
+            const skills = document.getElementById('skills').value;
+            const aboutMe = document.getElementById('aboutMe').value;
+            const profilePhoto = document.getElementById('profilePhoto').files[0];
+
+            // Create a new div to display the resume
+            const resumeDiv = document.getElementById('resume');
+            resumeDiv.innerHTML = '';
+
+            // Build the resume content
+            const resumeContent = document.createElement('div');
+            resumeContent.style.backgroundColor = '#fff';
+            resumeContent.style.padding = '20px';
+            resumeContent.style.border = '1px solid #ccc';
+            resumeContent.style.borderRadius = '4px';
+
+            // Add the profile photo if available
+            if (profilePhoto) {
+                const photo = document.createElement('img');
+                photo.src = URL.createObjectURL(profilePhoto);
+                photo.alt = 'Profile Photo';
+                photo.style.maxWidth = '100px';
+                photo.style.height = 'auto';
+                resumeContent.appendChild(photo);
+            }
+
+            // Add the rest of the resume content
+            resumeContent.innerHTML += `
+                <h2>${name}</h2>
+                <p><strong>Father's Name:</strong> ${fatherName}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Contact Number:</strong> ${contactNumber}</p>
+                <p><strong>Address:</strong> ${address}</p>
+                <p><strong>Languages Known:</strong> ${languages}</p>
+                <p><strong>Skills:</strong> ${skills}</p>
+                <p><strong>About Me:</strong> ${aboutMe}</p>
+            `;
+
+            // Display the resume content
+            resumeDiv.appendChild(resumeContent);
+        }
+
+        function downloadResume() {
+            // Create a professional-looking resume using a PDF generation library
+            // Example: Use jsPDF library (https://github.com/MrRio/jsPDF)
+            const name = document.getElementById('name').value;
+            const fatherName = document.getElementById('fatherName').value;
+            const email = document.getElementById('email').value;
+            const contactNumber = document.getElementById('contactNumber').value;
+            const address = document.getElementById('address').value;
+            const languages = document.getElementById('languages').value;
+            const skills = document.getElementById('skills').value;
+            const aboutMe = document.getElementById('aboutMe').value;
+            const profilePhoto = document.getElementById('profilePhoto').files[0];
+
+            // Check if the jsPDF library is available
+            if (typeof jsPDF !== 'undefined') {
+                const doc = new jsPDF();
+                doc.setFontSize(16);
+                doc.text(`Resume of ${name}`, 20, 20);
+                doc.setFontSize(12);
+                doc.text(`Father's Name: ${fatherName}`, 20, 30);
+                doc.text(`Email: ${email}`, 20, 40);
+                doc.text(`Contact Number: ${contactNumber}`, 20, 50);
+                doc.text(`Address: ${address}`, 20, 60);
+                doc.text(`Languages Known: ${languages}`, 20, 70);
+                doc.text(`Skills: ${skills}`, 20, 80);
+                doc.text(`About Me: ${aboutMe}`, 20, 90);
+
+                // Embed the profile photo
+                if (profilePhoto) {
+                    doc.addImage(profilePhoto, 'JPEG', 160, 20, 30, 40);
+                }
+
+                // Save the PDF
+                doc.save(`${name}_resume.pdf`);
+            } else {
+                alert('To download the resume, please enable the PDF generation library.');
+            }
+        }
+    </script>
+
+    <!-- Include the jsPDF library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</body>
+
+</html>
